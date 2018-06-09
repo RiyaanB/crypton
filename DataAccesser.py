@@ -1,14 +1,11 @@
-class PriceData:
-    def __init__(self):
-        self.data = []
-        self.file = open("./PriceData", "r")
-        line = self.file.readline()
-        while not "#" in line:
-            self.data.append(line)
-            line = self.file.readline()
+data = []
+file = open("./PriceData", "r")
+line = file.readline()
 
-        self.data = [float(a) for a in self.data]
+while not "#" in line:
+    data.append(line)
+    line = file.readline()
 
-    def price(self, hour):
-        return float(self.data[hour])
-
+b = [float(a) for a in data]
+data = [b[index] for index in range(0, len(data), 1)]
+print("Data: " + str(len(data)))

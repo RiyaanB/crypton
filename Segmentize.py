@@ -1,38 +1,37 @@
-import Constants
-from DataAccesser import PriceData
-pd = PriceData()
+from DataAccesser import *
 
 
 class Segment:
-
     def __init__(self, startTime, endTime):
         self.startTime = startTime
         self.endTime = endTime
-        self.grad = (pd.price(endTime) - pd.price(startTime))/(endTime - startTime)
+        self.grad = (data[endTime] - data[startTime])/(endTime - startTime)
 
     def __str__(self):
         return "(" + str(self.startTime) + ":" + str(self.endTime) + ")"
 
 
-def get_segments(pd):
+def get_segments():
     segments = []
     startTime = 0
-    limit = len(pd.data)
+    limit = len(data)
     while startTime < limit-1:
         endTime = startTime + 1
-        bestIndx = endTime
+        bestIndex = endTime
         error = 0
         while endTime < limit:
-            grad = (pd.price(endTime) - pd.price(startTime)) / (endTime - startTime)
-            for i in range(startTime+1,endTime):
-                predicted_val = (grad * (i-startTime)) + pd.price(startTime)
-                error += (pd.price(i) - predicted_val)**2
+            grad = (data[endTime] - data[startTime]) / (endTime - startTime)
+            for i in range(startTime+1, endTime):
+                predicted_val = (grad * (i-startTime)) + data[startTime]
+                error += (data[i] - predicted_val)**2
 
-            if error/(endTime-startTime+1) < Constants.N:
-                bestIndx = endTime
+            if error/(endTime-startTime+1) < 20000:
+                bestIndex = endTime
+            else:
+                break
 
             endTime += 1
-        segments.append(Segment(startTime, bestIndx))
-        startTime = bestIndx
+        segments.append(Segment(startTime, bestIndex))
+        startTime = bestIndex
+    print("Segments: " + str(len(segments)))
     return segments
-

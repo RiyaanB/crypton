@@ -2,7 +2,6 @@ import numpy
 
 
 class DataPoint:
-
     def __init__(self, timestamp, description, typ):
         self.timestamp = timestamp
         self.description = description
@@ -18,8 +17,7 @@ class DataPoint:
 
 
 class TwitterPositive(DataPoint):
-
-   pass
+    pass
 
 
 class TwitterNegative(DataPoint):

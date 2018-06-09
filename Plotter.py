@@ -1,17 +1,15 @@
 import matplotlib.pyplot as plt
-from DataAccesser import PriceData
+from DataAccesser import *
 import Segmentize
 
-pd = PriceData()
+plt.plot(list(range(0, len(data))), data, 'r-')
 
-plt.plot(list(range(0,len(pd.data))), pd.data, 'b-')
-
-segments = Segmentize.get_segments(pd)
+segments = Segmentize.get_segments()
 
 x = [segment.startTime for segment in segments]
-x.append(len(pd.data)-1)
-y = [pd.price(a) for a in x]
+x.append(len(data)-1)
+y = [data[a] for a in x]
 
-plt.plot(x, y, 'r-')
+plt.plot(x, y, 'b-')
 
 plt.show()
