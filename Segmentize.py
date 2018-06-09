@@ -1,23 +1,37 @@
 from DataAccesser import PriceData
+import Constants
 pd = PriceData()
 
 
 class Segment:
-    pass
+
+    def __init__(self, startTime, endTime):
+        self.startTime = startTime
+        self.endTime = endTime
+
+    def __str__(self):
+        return "(" + str(self.startTime) + ":" + str(self.endTime) + ")"
 
 
 def get_segments(pd):
     segments = []
     startTime = 0
-    endTime = 1
     limit = len(pd.data)
-    error = 0
-    best = 10
-    N = 1.2
-    while endTime < limit:
+    while startTime < limit:
+        endTime = startTime + 1
+        bestIndx = endTime
         error = 0
-        for i in range(startTime, limit):
-            predicted_price = ((pd.price(endTime)-pd.price(startTime))/(endTime-startTime)) * (i-startTime) + pd.price(startTime)
-            error += (pd.price(i) - (predicted_price))**2
-        error
-        endTime += 1
+        while endTime < limit:
+            grad = (pd.price(endTime) - pd.price(startTime)) / (endTime - startTime)
+            for i in range(startTime+1,endTime):
+                predicted_val = (grad * (i-startTime)) + pd.price(startTime)
+                error += (pd.price(i) - predicted_val)**2
+
+            if error/(endTime-startTime+1) < Constants.N:
+                bestIndx = endTime
+
+            endTime += 1
+        segments.append(Segment(startTime, bestIndx))
+        startTime = bestIndx + 1
+    return segments
+

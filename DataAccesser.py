@@ -7,5 +7,8 @@ class PriceData:
             self.data.append(line)
             line = self.file.readline()
 
+        self.data = [float(a) for a in self.data]
+
     def price(self, hour):
-        return self.data[hour]
+        return float(self.data[hour])
+
