@@ -1,5 +1,5 @@
-from DataAccesser import PriceData
 import Constants
+from DataAccesser import PriceData
 pd = PriceData()
 
 
@@ -8,6 +8,7 @@ class Segment:
     def __init__(self, startTime, endTime):
         self.startTime = startTime
         self.endTime = endTime
+        self.grad = (pd.price(endTime) - pd.price(startTime))/(endTime - startTime)
 
     def __str__(self):
         return "(" + str(self.startTime) + ":" + str(self.endTime) + ")"
@@ -17,7 +18,7 @@ def get_segments(pd):
     segments = []
     startTime = 0
     limit = len(pd.data)
-    while startTime < limit:
+    while startTime < limit-1:
         endTime = startTime + 1
         bestIndx = endTime
         error = 0
@@ -32,6 +33,6 @@ def get_segments(pd):
 
             endTime += 1
         segments.append(Segment(startTime, bestIndx))
-        startTime = bestIndx + 1
+        startTime = bestIndx
     return segments
 
