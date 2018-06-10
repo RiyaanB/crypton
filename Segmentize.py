@@ -4,7 +4,7 @@ from DataAccesser import *
 
 
 class Segment:
-    def __init__(self, startTime, endTime):
+    def __init__(self, startTime, endTime, data):
         self.startTime = startTime
         self.endTime = endTime
         self.grad = (data[endTime] - data[startTime])/(endTime - startTime)
@@ -27,13 +27,13 @@ def get_segments(data):
                 predicted_val = (grad * (i-startTime)) + data[startTime]
                 error += (data[i] - predicted_val)**2
 
-            if error/(endTime-startTime+1) < 30000:
+            if error/(endTime-startTime+1) < 10000:
                 bestIndex = endTime
             else:
                 break
 
             endTime += 1
-        segments.append(Segment(startTime, bestIndex))
+        segments.append(Segment(startTime, bestIndex, data))
         startTime = bestIndex
-    #print("Segments: " + str(len(segments)))
+    # print("Segments: " + str(len(segments)))
     return segments

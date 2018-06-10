@@ -6,7 +6,7 @@ def generate_price(filepath, startTime, endTime, textStartingPoint):
     file = open("./"+filepath, "r")
     line = file.readline()
     currentTime = textStartingPoint
-    while not "#" in line:
+    while "#" not in line:
         if startTime <= currentTime <= endTime:
             retVal.append(line)
         line = file.readline()

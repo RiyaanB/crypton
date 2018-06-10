@@ -1,6 +1,6 @@
 import numpy as np
 from DataPoints import *
-from DataPointsCollection import POINTS
+import PointCollection
 from Segmentize import get_segments
 
 
@@ -20,15 +20,13 @@ def generateWeightageMatrix(points, segments):
 def findBestTheta(points, segs):
     """ Uses vectorized gradient descent to find the best value of the over determined matrix"""
     gradients = np.transpose(np.matrix([segment.grad for segment in segs]))
-    alpha = 0.0001
+    alpha = 0.001
     theta = np.zeros((datatypes + 1, 1))
     m = generateWeightageMatrix(points, segs)
     delta = (1 / len(segs)) * np.matmul(np.transpose(m), (np.matmul(m, theta) - gradients))
     while np.sum(np.matmul(delta, np.transpose(delta))) > 0.001:
         theta = theta - alpha * delta
         delta = (1 / len(segs)) * np.matmul(np.transpose(m), (np.matmul(m, theta) - gradients))
-
+    diff = (numpy.matmul(m, theta) - gradients)
+    print("ERROR: " + str(numpy.sum(numpy.matmul(diff.transpose(), diff))))
     return theta
-
-if __name__ == "__main__":
-    print(findBestTheta(get_segments(), POINTS))

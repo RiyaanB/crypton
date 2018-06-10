@@ -1,18 +1,28 @@
-
 import Segmentize
 import DataAccesser
-import DataPointsCollection
+import PointCollection
 import Optimize
+import numpy as np
+
 TEXT_STARTING_POINT = 1515628800  # UNIX Time Stamp for first stock market data in "PriceData"
-trainStartTime = 1527638400  # The data we are considering to train
-trainEndTime = 100000000000000
+trainStartTime = 1527811200  # The data we are considering to train
+trainEndTime = 1528441200 #- 24*3600
+
+Points = PointCollection.generateDataPoints(trainStartTime)
 
 trainingPrices = DataAccesser.generate_price("PriceData", trainStartTime, trainEndTime, TEXT_STARTING_POINT)
 trainingSegments = Segmentize.get_segments(trainingPrices)
-trainingPoints = DataPointsCollection.generateDataPoints(trainStartTime, trainEndTime)
-theta = Optimize.findBestTheta(trainingPoints, trainingSegments)
+theta = Optimize.findBestTheta(Points, trainingSegments)
 
+testStartTime = trainEndTime
+testEndTime = 100000000000
 
+testingPrices = DataAccesser.generate_price("PriceData", testStartTime, testEndTime, TEXT_STARTING_POINT)
+testSegments = Segmentize.get_segments(testingPrices)
 
-
-
+m = Optimize.generateWeightageMatrix(Points, testSegments)
+gradients = np.transpose(np.matrix([segment.grad for segment in testSegments]))
+print("Predicted Gradients of BTC price")
+print(np.matmul(m, theta))
+print("\n Actual Gradient")
+print(gradients)
