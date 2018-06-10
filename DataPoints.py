@@ -1,4 +1,10 @@
 import numpy
+"""A DataPoint is anything that has the power to fluctuate price of Bitcoin. 
+These include tweets, articles, reddit posts etc..
+Each DataPoint should be classified into its subclasses such that all things inside each 
+class have similar attributes and have the potential to cause a change in price of BTC 
+of the same magnitude and direction
+Each class can also choose to define the weightage of the sources as a function of time """
 
 
 class DataPoint:

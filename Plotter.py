@@ -3,6 +3,9 @@ from DataAccesser import *
 import Segmentize
 from DataPointsCollection import POINTS
 
+"""Just a utility module to plot and visualize the segments"""
+
+
 plt.plot(list(range(0, len(data))), data, 'r-')
 
 segments = Segmentize.get_segments()
@@ -13,6 +16,5 @@ y = [data[a] for a in x]
 
 plt.plot(x, y, 'b-')
 
-plt.scatter([x.timestamp for x in POINTS], [7000]*len(POINTS))
-
+#plt.scatter([x.timestamp for x in POINTS], [7000]*len(POINTS))
 plt.show()

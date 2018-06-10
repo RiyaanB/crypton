@@ -1,6 +1,8 @@
 import datetime
 import tweepy
 
+"""" This module's primary purpose is to scrape tweets from the internet and allow us to rate the sentiment within it"""
+
 consumer_key = 'eofvfSE2IueXsMlbEAuylAxNL'
 consumer_secret = 'Griv6wHexwCfGwWpifGacZfd4etoG3EVMCC10qFnLpVFUOeJmG'
 
@@ -25,7 +27,6 @@ for tweet in tweepy.Cursor(api.search, q="Bitcoin -BTC -cash min_retweets:100", 
     print("Text: " + tweet.text)
     print("Date: " + str(tweet.created_at))
     print("Followers: " + str(tweet.user.followers_count))
-    print()
     print("Retweets:  " + str(tweet.retweet_count))
 
     group = int(input("Choice: "))

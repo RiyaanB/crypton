@@ -1,5 +1,7 @@
 from DataAccesser import *
 
+"""Approximate BITCOIN price using multiple straight lines to allow for model to work and remove noise"""
+
 
 class Segment:
     def __init__(self, startTime, endTime):
@@ -11,7 +13,7 @@ class Segment:
         return "(" + str(self.startTime) + ":" + str(self.endTime) + ")"
 
 
-def get_segments():
+def get_segments(data):
     segments = []
     startTime = 0
     limit = len(data)
@@ -33,5 +35,5 @@ def get_segments():
             endTime += 1
         segments.append(Segment(startTime, bestIndex))
         startTime = bestIndex
-    print("Segments: " + str(len(segments)))
+    #print("Segments: " + str(len(segments)))
     return segments
