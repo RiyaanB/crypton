@@ -25,7 +25,7 @@ plt.plot(x, y, 'b-')
 
 Points = PointCollection.generateDataPoints(trainStartTime)
 
-for point in Points:
-    plt.plot(point.timestamp, 7600, 'bx' if point.pos else 'rx')
-
+#for point in Points:
+#    plt.plot(point.timestamp, 7600, 'bx' if point.pos else 'rx')
+#
 plt.show()

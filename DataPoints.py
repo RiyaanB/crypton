@@ -21,7 +21,7 @@ class DataPoint:
         elif segment.startTime <= self.timestamp <= segment.endTime:
             return 1
         else:
-            return math.exp(-(((segment.startTime - self.timestamp)/4)**2))
+            return math.exp(-(((segment.startTime - self.timestamp)/8)**2))
 
     @staticmethod
     def weightage(wfreq):
@@ -49,6 +49,7 @@ class TwitterHighPositive(DataPoint):
     def weightage(wfreq):
         return wfreq**0.5
 
+
 class TwitterLowPositive(DataPoint):
     def __init__(self, timestamp, description):
         super().__init__(timestamp, description)
@@ -66,6 +67,7 @@ class TwitterLowPositive(DataPoint):
     @staticmethod
     def weightage(wfreq):
         return wfreq ** 0.5
+
 
 class TwitterHighNegative(DataPoint):
     def __init__(self, timestamp, description):
@@ -85,6 +87,7 @@ class TwitterHighNegative(DataPoint):
     def weightage(wfreq):
         return wfreq ** 0.5
 
+
 class TwitterLowNegative(DataPoint):
     def __init__(self, timestamp, description):
         super().__init__(timestamp, description)
@@ -103,19 +106,12 @@ class TwitterLowNegative(DataPoint):
     def weightage(wfreq):
         return wfreq ** 0.5
 
+
 class DominantPositive(DataPoint): #9 days
     def __init__(self, timestamp, description):
         super().__init__(timestamp, description)
         self.type = 4
         self.pos = True
-
-    def time_penalty(self, segment):
-        if self.timestamp > segment.endTime:
-            return 0
-        elif segment.startTime <= self.timestamp <= segment.endTime:
-            return 1
-        else:
-            return math.exp(-(((segment.startTime - self.timestamp)/2)**2))
 
 
 class DominantNegative(DataPoint):

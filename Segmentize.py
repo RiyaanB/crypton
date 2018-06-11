@@ -27,7 +27,7 @@ def get_segments(data):
                 predicted_val = (grad * (i-startTime)) + data[startTime]
                 error += (data[i] - predicted_val)**2
 
-            if error/(endTime-startTime+1) < 10000:
+            if error/(endTime-startTime+1) < 12000:
                 bestIndex = endTime
             else:
                 break

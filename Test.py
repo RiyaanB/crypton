@@ -6,7 +6,7 @@ import numpy as np
 
 TEXT_STARTING_POINT = 1515628800  # UNIX Time Stamp for first stock market data in "PriceData"
 trainStartTime = 1527811200  # The data we are considering to train
-trainEndTime = 1528441200 #- 24*3600
+trainEndTime = 1528441200
 
 Points = PointCollection.generateDataPoints(trainStartTime)
 
